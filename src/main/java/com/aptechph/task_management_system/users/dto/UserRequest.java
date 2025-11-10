@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class UserRequest {
     @NotBlank(message = "username is required")
@@ -11,4 +13,17 @@ public class UserRequest {
     @Email(message = "email must be valid")
     private String email;
     private String fullName;
+
+    public Object getEmail() {
+        getEmail();
+    }
+
+    public Object getFullName() {
+    }
+
+    public LocalDateTime getUpdatedAt() {
+    }
+
+    public Object getUsername() {
+    }
 }

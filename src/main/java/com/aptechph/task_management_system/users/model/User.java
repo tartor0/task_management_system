@@ -34,4 +34,19 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    public void setCreatedAt(LocalDateTime now) {
+
+    }
+
+    public void setUpdatedAt(LocalDateTime now) {
+    }
+
+    public void setUsername(Object username) {
+    }
+
+    public void setEmail(Object email) {
+    }
+
+    public void setFullName(Object fullName) {
+    }
 }
