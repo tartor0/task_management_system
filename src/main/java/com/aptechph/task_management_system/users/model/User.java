@@ -25,28 +25,13 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name")
     private String fullName;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public void setCreatedAt(LocalDateTime now) {
-
-    }
-
-    public void setUpdatedAt(LocalDateTime now) {
-    }
-
-    public void setUsername(Object username) {
-    }
-
-    public void setEmail(Object email) {
-    }
-
-    public void setFullName(Object fullName) {
-    }
 }

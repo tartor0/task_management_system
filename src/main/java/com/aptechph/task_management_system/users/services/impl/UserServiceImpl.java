@@ -15,24 +15,26 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
-
     @Override
     public UserResponse createUser(UserRequest request) {
+        // Map DTO → Entity
         User user = userMapper.toEntity(request);
+
+        // Set timestamps internally
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
+
+        // Save to DB
         User saved = userRepository.save(user);
+
+        // Map Entity → DTO for response
         return userMapper.toResponse(saved);
     }
 
@@ -40,31 +42,41 @@ public class UserServiceImpl implements UserService {
     public UserResponse getUserById(long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found with id : " + id));
+                        new ResourceNotFoundException("User not found with id: " + id));
         return userMapper.toResponse(user);
     }
 
     @Override
     public List<UserResponse> getAllUsers() {
-        return userRepository.findAll().stream().map(userMapper::toResponse).toList();
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toResponse)
+                .toList();
     }
 
     @Override
     public UserResponse updateUser(long id, UserRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found with id: "+ id));
+                        new ResourceNotFoundException("User not found with id: " + id));
+
+        // Update fields from DTO
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setFullName(request.getFullName());
-        user.setUpdatedAt(request.getUpdatedAt());
+
+        // Update timestamp internally
+        user.setUpdatedAt(LocalDateTime.now());
+
+        // Save updated user
         User updated = userRepository.save(user);
+
         return userMapper.toResponse(updated);
     }
 
     @Override
     public void deleteUser(long id) {
-        if(!userRepository.existsById(id)) {
+        if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("User not found with id: " + id);
         }
         userRepository.deleteById(id);

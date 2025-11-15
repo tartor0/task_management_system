@@ -9,12 +9,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ErrorResponse {
     private String message;
     private LocalDateTime timestamp;
-
-    public ErrorResponse(String anUnexpectedErrorOccurred, LocalDateTime now) {
-    }
 }
